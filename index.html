@@ -193,7 +193,7 @@ function fmtBlock(hex) {
 }
 
 async function rpc(method, params) {
-  var r = await fetch('https://signet.opnet.org', {
+  var r = await fetch('https://testnet.opnet.org', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({jsonrpc:'2.0', id:1, method: method, params: params || []})
@@ -215,7 +215,7 @@ async function getTx(txid) {
   } catch(e) {}
 
   // Fallback: direct RPC via fetch
-  var r2 = await fetch('https://signet.opnet.org', {
+  var r2 = await fetch('https://testnet.opnet.org', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({jsonrpc:'2.0', id:1, method:'btc_getTransactionByHash', params:[txid]})
@@ -228,7 +228,7 @@ async function getTx(txid) {
 
 async function getAddrTxs(addr) {
   try {
-    var r = await fetch('https://signet.opnet.org', {
+    var r = await fetch('https://testnet.opnet.org', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({jsonrpc:'2.0', id:1, method:'btc_getTransactionsByAddress', params:[addr, 10]})
