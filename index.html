@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Track the Sats — Nodebirds</title>
+<title>Track the Sats</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -112,7 +112,7 @@ main{position:relative;z-index:1;max-width:600px;margin:0 auto;padding:24px 16px
 <div class="mixer-overlay" id="mixer-overlay" style="display:none" onclick="dismissMixer()">
   <div class="mixer-popup" onclick="event.stopPropagation()">
     <div class="electric-wrap">
-      <img src="https://raw.githubusercontent.com/aeonnullish/Track-the-sats/main/Electric%20expand.png" alt="Electric Nodebird"/>
+      <span style="font-size:3rem">⚡</span>
       <span class="eplus">+</span>
       <span class="eplus">+</span>
       <span class="eplus">+</span>
@@ -127,10 +127,10 @@ main{position:relative;z-index:1;max-width:600px;margin:0 auto;padding:24px 16px
 
 <header>
   <div class="logo">
-    <img id="bird" src="https://raw.githubusercontent.com/aeonnullish/Track-the-sats/main/Normal%20redi.png" alt="Nodebird"/>
+    <span id="bird" style="display:inline-block;width:40px;height:40px;background:#f97316;border-radius:6px"></span>
     <div>
       <div class="logo-title">Track the Sats</div>
-      <div class="logo-sub">Powered by Nodebirds</div>
+      <div class="logo-sub"></div>
     </div>
   </div>
   <div class="badge">OP_NET</div>
@@ -155,7 +155,7 @@ main{position:relative;z-index:1;max-width:600px;margin:0 auto;padding:24px 16px
 
   <div id="chain"></div>
   <button class="sbtn" id="sbtn" onclick="exportChain()">Save Chain</button>
-  <div class="footer-note">N O D E B I R D S · Read-only · OP_NET Testnet · No wallet required</div>
+  <div class="footer-note">Read-only · OP_NET Testnet · No wallet required</div>
 </main>
 
 <script>
@@ -169,8 +169,8 @@ let target = '';
 function bird(s) {
   var b = document.getElementById('bird');
   if (!b) return;
-  if (s === 'search') b.src = 'https://raw.githubusercontent.com/aeonnullish/Track-the-sats/main/Detective.png';
-  else b.src = 'https://raw.githubusercontent.com/aeonnullish/Track-the-sats/main/Normal%20redi.png';
+  if (s === 'search') 
+  else 
 }
 
 function trim(s, n) {
@@ -479,7 +479,7 @@ function exportChain() {
     txt += '\n';
   });
   txt += '='.repeat(60) + '\n';
-  txt += 'Powered by N O D E B I R D S\n';
+  txt += '\n';
   var a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([txt], { type: 'text/plain' }));
   a.download = 'evidence-chain.txt';
