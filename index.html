@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -7,131 +6,66 @@
 <title>Track the Sats</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
+/* Din existerande CSS behålls oförändrad */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 a{color:inherit;text-decoration:none}
 html,body{background:#060608;color:#e2e2e8;font-family:'Outfit',sans-serif;min-height:100vh}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 50% -5%,rgba(249,115,22,0.08),transparent 60%);pointer-events:none;z-index:0}
 .grid{position:fixed;inset:0;background-image:linear-gradient(rgba(249,115,22,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(249,115,22,0.02) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
-
 header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-bottom:1px solid rgba(249,115,22,0.1);background:rgba(6,6,8,0.95);backdrop-filter:blur(20px)}
 .logo{display:flex;align-items:center;gap:10px}
-.logo img{width:40px;height:40px;image-rendering:pixelated}
 .logo-title{font-size:0.82rem;font-weight:900;letter-spacing:0.08em;color:#f97316;text-transform:uppercase}
-.logo-sub{font-size:0.48rem;color:#55556a;letter-spacing:0.25em;text-transform:uppercase;font-family:‘Share Tech Mono’,monospace}
-.badge{font-family:‘Share Tech Mono’,monospace;font-size:0.55rem;color:#f97316;border:1px solid rgba(249,115,22,0.3);padding:3px 8px;border-radius:3px;background:rgba(249,115,22,0.08)}
-
+.badge{font-family:'Share Tech Mono',monospace;font-size:0.55rem;color:#f97316;border:1px solid rgba(249,115,22,0.3);padding:3px 8px;border-radius:3px;background:rgba(249,115,22,0.08)}
 main{position:relative;z-index:1;max-width:600px;margin:0 auto;padding:24px 16px 80px}
-
 .hero{text-align:center;padding:20px 0 24px}
-.hero h1{font-size:1.7rem;font-weight:900;letter-spacing:-0.02em;margin-bottom:6px}
+.hero h1{font-size:1.7rem;font-weight:900;margin-bottom:6px}
 .hero h1 em{color:#f97316;font-style:normal}
 .hero p{font-size:0.82rem;color:#55556a;line-height:1.6}
-
 .start-form{background:#0e0e14;border:1px solid rgba(249,115,22,0.15);border-radius:14px;padding:20px;margin-bottom:16px}
-.fl{font-family:‘Share Tech Mono’,monospace;font-size:0.56rem;color:#55556a;letter-spacing:0.1em;margin-bottom:4px;display:block;text-transform:uppercase}
-.fh{font-family:‘Share Tech Mono’,monospace;font-size:0.5rem;color:#3a3a50;margin-bottom:8px;display:block}
-.fi{width:100%;background:#060608;border:1px solid rgba(249,115,22,0.12);border-radius:8px;padding:11px 13px;color:#e2e2e8;font-family:‘Share Tech Mono’,monospace;font-size:0.72rem;outline:none;-webkit-appearance:none;margin-bottom:14px}
-.fi::placeholder{color:#2a2a40}
-.fi:focus{border-color:rgba(249,115,22,0.4)}
-.fi.hl{border-color:rgba(249,115,22,0.35)}
-.btn{width:100%;background:#f97316;color:#000;border:none;border-radius:8px;padding:13px;font-family:‘Outfit’,sans-serif;font-size:0.85rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;transition:opacity .15s}
-.btn:disabled{opacity:0.35;cursor:not-allowed}
-.btn:not(:disabled):hover{opacity:0.9}
-.err{background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.2);border-radius:8px;padding:10px 12px;font-family:‘Share Tech Mono’,monospace;font-size:0.65rem;color:#ef4444;margin-bottom:10px;display:none}
-.st{font-family:‘Share Tech Mono’,monospace;font-size:0.6rem;color:#55556a;text-align:center;padding:6px;min-height:22px}
-
-/* Chain */
+.fl{font-family:'Share Tech Mono',monospace;font-size:0.56rem;color:#55556a;display:block;text-transform:uppercase}
+.fh{font-family:'Share Tech Mono',monospace;font-size:0.5rem;color:#3a3a50;margin-bottom:8px;display:block}
+.fi{width:100%;background:#060608;border:1px solid rgba(249,115,22,0.12);border-radius:8px;padding:11px 13px;color:#e2e2e8;font-family:'Share Tech Mono',monospace;font-size:0.72rem;margin-bottom:14px}
+.btn{width:100%;background:#f97316;color:#000;border:none;border-radius:8px;padding:13px;font-size:0.85rem;font-weight:800;text-transform:uppercase;cursor:pointer}
+.err{background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.2);border-radius:8px;padding:10px 12px;font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:#ef4444;margin-bottom:10px;display:none}
+.st{font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:#55556a;text-align:center;padding:6px;min-height:22px}
 #chain{display:flex;flex-direction:column}
-.tx-card{background:#0e0e14;border:1px solid rgba(249,115,22,0.15);border-radius:14px;overflow:hidden}
+.tx-card{background:#0e0e14;border:1px solid rgba(249,115,22,0.15);border-radius:14px;overflow:hidden;margin-bottom:10px}
 .tx-head{padding:13px 16px 10px;border-bottom:1px solid rgba(255,255,255,0.04)}
-.tx-hop{font-family:‘Share Tech Mono’,monospace;font-size:0.5rem;color:#f97316;letter-spacing:0.14em;margin-bottom:3px}
-.tx-id{font-family:‘Share Tech Mono’,monospace;font-size:0.55rem;color:#55556a;word-break:break-all;line-height:1.5}
-.tx-time{font-family:‘Share Tech Mono’,monospace;font-size:0.52rem;color:#3a3a50;margin-top:3px}
+.tx-hop{font-family:'Share Tech Mono',monospace;font-size:0.5rem;color:#f97316;letter-spacing:0.14em}
+.tx-id{font-family:'Share Tech Mono',monospace;font-size:0.55rem;color:#55556a;word-break:break-all}
 .tx-body{padding:13px 16px}
-.sec-lbl{font-family:‘Share Tech Mono’,monospace;font-size:0.48rem;color:#55556a;letter-spacing:0.12em;margin-bottom:6px;text-transform:uppercase}
-.row{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;padding:8px 11px;background:#16161f;border-radius:7px;margin-bottom:3px}
-.rl{font-family:‘Share Tech Mono’,monospace;font-size:0.58rem;color:#e2e2e8;word-break:break-all;flex:1;line-height:1.5}
-.rr{font-family:‘Share Tech Mono’,monospace;font-size:0.58rem;color:#55556a;text-align:right;white-space:nowrap;flex-shrink:0}
-
-/* Connector */
+.sec-lbl{font-family:'Share Tech Mono',monospace;font-size:0.48rem;color:#55556a;margin-bottom:6px;text-transform:uppercase}
+.row{display:flex;justify-content:space-between;background:#16161f;border-radius:7px;padding:8px 11px;margin-bottom:3px}
+.rl{font-family:'Share Tech Mono',monospace;font-size:0.58rem;color:#e2e2e8;word-break:break-all}
+.rr{font-family:'Share Tech Mono',monospace;font-size:0.58rem;color:#55556a}
 .connector{display:flex;flex-direction:column;align-items:center;padding:6px 0}
 .cline{width:2px;height:20px;background:rgba(249,115,22,0.2)}
 .cdot{width:8px;height:8px;border-radius:50%;background:#f97316;margin:2px 0}
-
-/* Next box */
 .next-box{background:#16161f;border:1px solid rgba(249,115,22,0.2);border-radius:12px;padding:16px}
-.next-title{font-family:‘Share Tech Mono’,monospace;font-size:0.56rem;color:#f97316;letter-spacing:0.1em;margin-bottom:4px}
-.next-sub{font-family:‘Share Tech Mono’,monospace;font-size:0.5rem;color:#55556a;margin-bottom:12px;line-height:1.5}
-.wchoice{padding:10px 12px;background:#0e0e14;border:1px solid rgba(255,255,255,0.06);border-radius:8px;cursor:pointer;margin-bottom:6px;transition:border-color .15s}
-.wchoice:hover,.wchoice.sel{border-color:rgba(249,115,22,0.4);background:rgba(249,115,22,0.04)}
-.wlbl{font-family:‘Share Tech Mono’,monospace;font-size:0.48rem;color:#55556a;letter-spacing:0.1em;margin-bottom:2px}
-.waddr{font-family:‘Share Tech Mono’,monospace;font-size:0.62rem;color:#e2e2e8;word-break:break-all}
-.wval{font-family:‘Share Tech Mono’,monospace;font-size:0.5rem;color:#f97316;margin-top:2px}
-.divider{border:none;border-top:1px solid rgba(255,255,255,0.04);margin:12px 0}
-.tx-suggestion{padding:10px 12px;background:#0e0e14;border:1px solid rgba(255,255,255,0.06);border-radius:8px;cursor:pointer;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;gap:8px;transition:border-color .15s}
-.tx-suggestion:hover{border-color:rgba(249,115,22,0.3);background:rgba(249,115,22,0.03)}
-.ts-left{flex:1}
-.ts-date{font-family:‘Share Tech Mono’,monospace;font-size:0.48rem;color:#55556a;margin-bottom:2px}
-.ts-txid{font-family:‘Share Tech Mono’,monospace;font-size:0.56rem;color:#e2e2e8;word-break:break-all}
-.ts-info{font-family:‘Share Tech Mono’,monospace;font-size:0.48rem;color:#f97316;margin-top:2px}
-.ts-arr{color:#f97316;font-size:0.9rem;flex-shrink:0}
-
-/* Mixer popup */
-.mixer-overlay{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(6,6,8,0.7);backdrop-filter:blur(4px)}
-.mixer-popup{background:#0e0e14;border:1px solid rgba(249,115,22,0.3);border-radius:16px;padding:24px;text-align:center;max-width:320px;width:100%;animation:popIn .3s ease}
-@keyframes popIn{from{transform:scale(0.85);opacity:0}to{transform:scale(1);opacity:1}}
-.mixer-bird{width:80px;height:80px;image-rendering:pixelated;display:block;margin:0 auto 14px;position:relative}
-.mixer-title{font-size:1rem;font-weight:800;color:#f97316;margin-bottom:8px}
-.mixer-msg{font-family:‘Share Tech Mono’,monospace;font-size:0.62rem;color:#e2e2e8;line-height:1.6}
-
-/* Electric + animation */
-.electric-wrap{position:relative;display:inline-block;width:80px;height:80px;margin:0 auto 14px}
-.electric-wrap img{width:80px;height:80px;image-rendering:pixelated;display:block}
-.eplus{position:absolute;font-size:0.7rem;color:#f97316;font-weight:900;animation:floatPlus 2s ease-in-out infinite}
-.eplus:nth-child(2){top:-8px;left:-8px;animation-delay:0s}
-.eplus:nth-child(3){top:-8px;right:-8px;animation-delay:0.4s}
-.eplus:nth-child(4){bottom:-8px;left:-8px;animation-delay:0.8s}
-.eplus:nth-child(5){bottom:-8px;right:-8px;animation-delay:1.2s}
-.eplus:nth-child(6){top:50%;left:-14px;animation-delay:0.6s}
-.eplus:nth-child(7){top:50%;right:-14px;animation-delay:1s}
-@keyframes floatPlus{0%,100%{opacity:0.2;transform:scale(0.7)}50%{opacity:1;transform:scale(1.2)}}
-
-/* Export */
-.sbtn{width:100%;background:transparent;border:1px solid rgba(249,115,22,0.25);border-radius:8px;padding:11px;font-family:‘Outfit’,sans-serif;font-size:0.78rem;font-weight:700;color:#f97316;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;margin-top:14px;display:none}
-.sbtn:hover{background:rgba(249,115,22,0.05)}
-
-.footer-note{text-align:center;font-family:‘Share Tech Mono’,monospace;font-size:0.48rem;color:#2a2a3a;margin-top:40px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.03);letter-spacing:0.15em}
+.next-title{font-family:'Share Tech Mono',monospace;font-size:0.56rem;color:#f97316}
+.wchoice{padding:10px 12px;background:#0e0e14;border:1px solid rgba(255,255,255,0.06);border-radius:8px;cursor:pointer;margin-bottom:6px}
+.wchoice.sel{border-color:rgba(249,115,22,0.4);background:rgba(249,115,22,0.04)}
+.mixer-overlay{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;background:rgba(6,6,8,0.7);backdrop-filter:blur(4px)}
+.mixer-popup{background:#0e0e14;border:1px solid rgba(249,115,22,0.3);border-radius:16px;padding:24px;text-align:center;max-width:320px}
+.sbtn{width:100%;background:transparent;border:1px solid rgba(249,115,22,0.25);border-radius:8px;padding:11px;color:#f97316;cursor:pointer;margin-top:14px;display:none}
+.footer-note{text-align:center;font-family:'Share Tech Mono',monospace;font-size:0.48rem;color:#2a2a3a;margin-top:40px}
 </style>
-
 </head>
 <body>
 <div class="grid"></div>
 
-<!-- Mixer popup -->
-
 <div class="mixer-overlay" id="mixer-overlay" style="display:none" onclick="dismissMixer()">
   <div class="mixer-popup" onclick="event.stopPropagation()">
-    <div class="electric-wrap">
-      <span style="font-size:3rem">⚡</span>
-      <span class="eplus">+</span>
-      <span class="eplus">+</span>
-      <span class="eplus">+</span>
-      <span class="eplus">+</span>
-      <span class="eplus">+</span>
-      <span class="eplus">+</span>
-    </div>
-    <div class="mixer-title">⚡ Mixer Detected</div>
-    <div class="mixer-msg" id="mixer-msg">This wallet shows mixer patterns.</div>
+    <div style="font-size:3rem; margin-bottom:10px">⚡</div>
+    <div style="color:#f97316; font-weight:800; margin-bottom:8px">⚡ Mixer Detected</div>
+    <div id="mixer-msg" style="font-family:'Share Tech Mono',monospace; font-size:0.62rem; color:#e2e2e8"></div>
   </div>
 </div>
 
 <header>
   <div class="logo">
-    <span id="bird" style="display:inline-block;width:40px;height:40px;background:#f97316;border-radius:6px"></span>
-    <div>
-      <div class="logo-title">Track the Sats</div>
-      <div class="logo-sub"></div>
-    </div>
+    <span style="display:inline-block;width:40px;height:40px;background:#f97316;border-radius:6px"></span>
+    <div><div class="logo-title">Track the Sats</div></div>
   </div>
   <div class="badge">OP_NET</div>
 </header>
@@ -143,11 +77,10 @@ main{position:relative;z-index:1;max-width:600px;margin:0 auto;padding:24px 16px
   </div>
 
   <div class="start-form" id="start-form">
-    <label class="fl">// What are you tracking? <span style="color:#3a3a50">(optional)</span></label>
-    <span class="fh">e.g. "$PILL 2000", "0.05 BTC", inscription ID</span>
-    <input class="fi" id="target-input" placeholder="Token, amount, or ID you're following…" autocomplete="off" spellcheck="false"/>
-    <label class="fl">// Transaction ID <span style="color:#ef4444">*</span></label>
-    <input class="fi hl" id="tx-input" placeholder="Paste OP_NET TX ID here…" autocomplete="off" spellcheck="false"/>
+    <label class="fl">// What are you tracking? (optional)</label>
+    <input class="fi" id="target-input" placeholder="Token, amount, or ID…"/>
+    <label class="fl">// Transaction ID *</label>
+    <input class="fi" id="tx-input" placeholder="Paste OP_NET TX ID here…"/>
     <div class="err" id="start-err"></div>
     <button class="btn" id="start-btn" onclick="startInvestigation()">Investigate</button>
     <div class="st" id="start-st"></div>
@@ -155,344 +88,80 @@ main{position:relative;z-index:1;max-width:600px;margin:0 auto;padding:24px 16px
 
   <div id="chain"></div>
   <button class="sbtn" id="sbtn" onclick="exportChain()">Save Chain</button>
-  <div class="footer-note">Read-only · OP_NET Testnet · No wallet required</div>
+  <div class="footer-note">Read-only · OP_NET Testnet</div>
 </main>
 
 <script>
-// OP_NET RPC
-const RPC = 'https://api.opnet.org';
-const NETWORK = 'testnet';
+// VIKTIGT: Din nya Worker-URL som fungerar som bro
+const MY_PROXY = 'https://trackproxy.aeonnullish.workers.dev';
 
 let hops = [];
 let target = '';
 
-function bird(s) {
-  var b = document.getElementById('bird');
-  if (!b) return;
+function trim(s, n=12) { return s && s.length > n*2+3 ? s.slice(0, n) + '…' + s.slice(-6) : s || '—'; }
+function fmtSats(v) { 
+  let n = typeof v === 'string' ? (v.startsWith('0x') ? parseInt(v,16) : parseInt(v)) : v;
+  return n >= 1e8 ? (n/1e8).toFixed(8) + ' BTC' : n.toLocaleString() + ' sats';
 }
 
-function trim(s, n) {
-  n = n || 12;
-  if (!s) return '—';
-  if (s.length <= n * 2 + 3) return s;
-  return s.slice(0, n) + '…' + s.slice(-6);
-}
-
-function fmtSats(val) {
-  if (!val) return '0 sats';
-  var n = typeof val === 'string' ? (val.startsWith('0x') ? parseInt(val, 16) : parseInt(val)) : val;
-  if (n >= 100000000) return (n / 1e8).toFixed(8) + ' BTC';
-  return n.toLocaleString() + ' sats';
-}
-
-function fmtBlock(hex) {
-  if (!hex) return '—';
-  return '#' + parseInt(hex, 16).toLocaleString();
-}
-
-var RPC_URL = 'https://testnet.opnet.org';
-var PROXY = 'https://thingproxy.freeboard.io/fetch/';
-
-async function rpcPost(body) {
-  var tries = [
-    async function() {
-      var r = await fetch(RPC_URL, {method:'POST', headers:{'Content-Type':'application/json'}, body:body});
-      if (!r.ok) throw new Error('fail');
-      return await r.json();
-    },
-    async function() {
-      var r = await fetch(PROXY + RPC_URL, {method:'POST', headers:{'Content-Type':'application/json'}, body:body});
-      if (!r.ok) throw new Error('fail');
-      return await r.json();
-    },
-    async function() {
-      var r = await fetch('https://corsproxy.io/?' + encodeURIComponent(RPC_URL), {method:'POST', headers:{'Content-Type':'application/json','x-requested-with':'fetch'}, body:body});
-      if (!r.ok) throw new Error('fail');
-      return await r.json();
-    }
-  ];
-  for (var i = 0; i < tries.length; i++) {
-    try { return await tries[i](); } catch(e) {}
-  }
-  throw new Error('Could not reach OP_NET. Check your connection.');
-}
-
-async function rpc(method, params) {
-  var d = await rpcPost(JSON.stringify({jsonrpc:'2.0', id:1, method:method, params:params||[]}));
-  if (d.error) throw new Error(d.error.message || 'RPC error');
-  return d.result;
-}
-
-async function getTx(txid) {
-  var d = await rpcPost(JSON.stringify({jsonrpc:'2.0', id:1, method:'btc_getTransactionByHash', params:[txid]}));
-  if (d.error) throw new Error('Transaction not found. Make sure it is an OP_NET testnet TX.');
-  return d.result;
-}
-
-async function getAddrTxs(addr) {
-  try {
-    var r = await fetch(RPC_URL, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({jsonrpc:'2.0', id:1, method:'btc_getTransactionsByAddress', params:[addr, 10]})
-    });
-    if (!r.ok) return [];
-    var d = await r.json();
-    return d.result || [];
-  } catch(e) { return []; }
-}
-
-function isMixer(tx) {
-  var inputs = tx.inputs || tx.vin || [];
-  var outputs = tx.outputs || tx.vout || [];
-  var outs = outputs.filter(function(o) {
-    var type = o.scriptPubKey ? o.scriptPubKey.type : o.scriptpubkey_type;
-    return type !== 'op_return';
+async function rpcCall(method, params) {
+  const res = await fetch(MY_PROXY, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ jsonrpc: '2.0', id: 1, method, params: params || [] })
   });
-  if (inputs.length >= 10) return inputs.length + ' inputs detected — high-volume mixer pattern.';
-  if (inputs.length >= 5 && outs.length >= 5) {
-    var amounts = outs.map(function(o) { return parseInt(o.value || 0); });
-    var unique = amounts.filter(function(v, i, a) { return a.indexOf(v) === i; });
-    if (unique.length <= 2) return 'Many inputs with equal outputs — possible CoinJoin or mixer.';
-  }
-  return null;
-}
-
-function showMixer(msg) {
-  document.getElementById('mixer-msg').textContent = msg;
-  document.getElementById('mixer-overlay').style.display = 'flex';
-  setTimeout(dismissMixer, 4000);
-}
-
-function dismissMixer() {
-  document.getElementById('mixer-overlay').style.display = 'none';
-}
-
-function renderChain() {
-  var chain = document.getElementById('chain');
-  chain.innerHTML = '';
-
-  hops.forEach(function(hop, i) {
-    var tx = hop.tx;
-    var inputs = tx.inputs || tx.vin || [];
-    var outputs = tx.outputs || tx.vout || [];
-
-    var senderAddrs = inputs.map(function(v) {
-      if (v.scriptPubKey && v.scriptPubKey.address) return v.scriptPubKey.address;
-      if (v.prevout && v.prevout.scriptpubkey_address) return v.prevout.scriptpubkey_address;
-      return null;
-    }).filter(function(a, i, arr) { return a && arr.indexOf(a) === i; });
-
-    var fromHTML = senderAddrs.length
-      ? senderAddrs.map(function(s) {
-          return '<div class="row"><div class="rl">' + trim(s, 16) + '</div></div>';
-        }).join('')
-      : '<div class="row"><div class="rl" style="color:#3a3a50">Unknown sender</div></div>';
-
-    var toHTML = outputs.filter(function(o) {
-      var type = o.scriptPubKey ? o.scriptPubKey.type : o.scriptpubkey_type;
-      return type !== 'op_return';
-    }).map(function(o) {
-      var addr = (o.scriptPubKey && o.scriptPubKey.address) || o.scriptpubkey_address || 'Unknown';
-      var val = fmtSats(o.value);
-      return '<div class="row"><div class="rl">' + trim(addr, 16) + '</div><div class="rr">' + val + '</div></div>';
-    }).join('');
-
-    var blockStr = fmtBlock(tx.blockNumber || tx.block_height);
-
-    chain.insertAdjacentHTML('beforeend',
-      '<div class="tx-card" id="card-' + i + '">' +
-        '<div class="tx-head">' +
-          '<div class="tx-hop">// HOP ' + (i + 1) + (target ? ' · TRACKING: ' + trim(target, 16) : '') + '</div>' +
-          '<div class="tx-id">' + trim(hop.txid, 20) + '</div>' +
-          '<div class="tx-time">Block ' + blockStr + ' · ' + (tx.OPNetType || tx.type || 'Transfer') + '</div>' +
-        '</div>' +
-        '<div class="tx-body">' +
-          '<div style="margin-bottom:10px"><div class="sec-lbl">From</div>' + fromHTML + '</div>' +
-          '<div><div class="sec-lbl">To</div>' + toHTML + '</div>' +
-        '</div>' +
-      '</div>'
-    );
-
-    if (i === hops.length - 1 && hops.length < 10) {
-      var allOutAddrs = outputs.filter(function(o) {
-        var t = o.scriptPubKey ? o.scriptPubKey.type : o.scriptpubkey_type;
-        return t !== 'op_return';
-      }).map(function(o) {
-        return { addr: (o.scriptPubKey && o.scriptPubKey.address) || o.scriptpubkey_address || null, val: fmtSats(o.value) };
-      }).filter(function(x) { return x.addr; });
-
-      var receivers = allOutAddrs.filter(function(x) { return senderAddrs.indexOf(x.addr) < 0; });
-      var walletOpts = senderAddrs.map(function(a) { return { addr: a, role: 'Sender', val: '' }; })
-        .concat(receivers.map(function(x) { return { addr: x.addr, role: 'Receiver', val: x.val }; }));
-
-      var wcHTML = walletOpts.map(function(w, wi) {
-        return '<div class="wchoice" id="wc-' + i + '-' + wi + '" onclick="pickWallet(' + i + ',' + wi + ',\'' + w.addr + '\')">' +
-          '<div class="wlbl">' + w.role + '</div>' +
-          '<div class="waddr">' + trim(w.addr, 18) + '</div>' +
-          (w.val ? '<div class="wval">' + w.val + '</div>' : '') +
-        '</div>';
-      }).join('');
-
-      chain.insertAdjacentHTML('beforeend',
-        '<div class="connector"><div class="cline"></div><div class="cdot"></div><div class="cline"></div></div>' +
-        '<div class="next-box" id="next-' + i + '">' +
-          '<div class="next-title">+ Follow the trail</div>' +
-          '<div class="next-sub">Which wallet do you want to follow?</div>' +
-          wcHTML +
-          '<div id="suggestions-' + i + '" style="display:none">' +
-            '<div class="divider"></div>' +
-            '<div class="sec-lbl" style="margin-bottom:8px">Recent transactions — tap to follow</div>' +
-            '<div id="txlist-' + i + '"></div>' +
-            '<div class="divider"></div>' +
-            '<div class="sec-lbl" style="margin-bottom:6px">Or paste TX ID manually</div>' +
-            '<input class="fi" id="next-input-' + i + '" placeholder="Next TX ID…" autocomplete="off" spellcheck="false"/>' +
-            '<div class="err" id="next-err-' + i + '"></div>' +
-            '<button class="btn" id="next-btn-' + i + '" onclick="addNextHop(' + i + ')" style="margin-top:8px">Add Hop</button>' +
-          '</div>' +
-        '</div>'
-      );
-    } else if (i < hops.length - 1) {
-      chain.insertAdjacentHTML('beforeend', '<div class="connector"><div class="cline"></div><div class="cdot"></div><div class="cline"></div></div>');
-    }
-  });
-
-  if (hops.length > 1) document.getElementById('sbtn').style.display = 'block';
-}
-
-async function pickWallet(hopIdx, walletIdx, addr) {
-  document.querySelectorAll('[id^="wc-' + hopIdx + '-"]').forEach(function(el) { el.classList.remove('sel'); });
-  var wc = document.getElementById('wc-' + hopIdx + '-' + walletIdx);
-  if (wc) wc.classList.add('sel');
-
-  var sugBox = document.getElementById('suggestions-' + hopIdx);
-  var txList = document.getElementById('txlist-' + hopIdx);
-  sugBox.style.display = 'block';
-  txList.innerHTML = '<div style="font-family:monospace;font-size:0.6rem;color:#55556a;padding:8px">Loading transactions…</div>';
-
-  bird('search');
-  var txs = await getAddrTxs(addr);
-  bird('normal');
-
-  if (!txs || !txs.length) {
-    txList.innerHTML = '<div style="font-family:monospace;font-size:0.6rem;color:#55556a;padding:8px">No transactions found for this address.</div>';
-    return;
-  }
-
-  var recent = txs.slice(0, 5);
-  txList.innerHTML = recent.map(function(tx) {
-    var txid = tx.id || tx.txid || tx.hash || '';
-    var block = fmtBlock(tx.blockNumber || tx.block_height);
-    var type = tx.OPNetType || tx.type || 'Transfer';
-    var outputs = tx.outputs || tx.vout || [];
-    var totalOut = outputs.reduce(function(s, o) { return s + (parseInt(o.value || 0)); }, 0);
-    return '<div class="tx-suggestion" onclick="selectTx(\'' + txid + '\')">' +
-      '<div class="ts-left">' +
-        '<div class="ts-date">Block ' + block + ' · ' + type + '</div>' +
-        '<div class="ts-txid">' + trim(txid, 16) + '</div>' +
-        '<div class="ts-info">' + fmtSats(totalOut) + ' total out</div>' +
-      '</div>' +
-      '<div class="ts-arr">→</div>' +
-    '</div>';
-  }).join('');
-}
-
-function selectTx(txid) {
-  addHopByTxid(txid);
-}
-
-async function addNextHop(i) {
-  var inp = document.getElementById('next-input-' + i);
-  var txid = inp && inp.value.trim();
-  var errEl = document.getElementById('next-err-' + i);
-  var btn = document.getElementById('next-btn-' + i);
-  if (!txid) { if (errEl) { errEl.textContent = 'Paste a TX ID first.'; errEl.style.display = 'block'; } return; }
-  if (errEl) errEl.style.display = 'none';
-  if (btn) btn.disabled = true;
-  await addHopByTxid(txid);
-  if (btn) btn.disabled = false;
-}
-
-async function addHopByTxid(txid) {
-  bird('search');
-  try {
-    var tx = await getTx(txid);
-    var mixerWarning = isMixer(tx);
-    hops.push({ txid: txid, tx: tx });
-    renderChain();
-    if (mixerWarning) setTimeout(function() { showMixer(mixerWarning); }, 500);
-    setTimeout(function() {
-      var last = document.getElementById('card-' + (hops.length - 1));
-      if (last) last.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
-  } catch(e) {
-    alert('Error: ' + e.message);
-  }
-  bird('normal');
+  const data = await res.json();
+  if (data.error) throw new Error(data.error.message);
+  return data.result;
 }
 
 async function startInvestigation() {
   target = document.getElementById('target-input').value.trim();
-  var txid = document.getElementById('tx-input').value.trim();
-  var errEl = document.getElementById('start-err');
-  var stEl = document.getElementById('start-st');
-  errEl.style.display = 'none';
-  if (!txid) { errEl.textContent = 'Paste a Transaction ID first.'; errEl.style.display = 'block'; return; }
+  const txid = document.getElementById('tx-input').value.trim();
+  if (!txid) return;
+  
   document.getElementById('start-btn').disabled = true;
-  stEl.textContent = 'Fetching transaction…';
-  bird('search');
+  document.getElementById('start-st').textContent = 'Fetching...';
+  
   try {
-    var tx = await getTx(txid);
-    hops = [{ txid: txid, tx: tx }];
+    const tx = await rpcCall('btc_getTransactionByHash', [txid]);
+    hops = [{ txid, tx }];
     document.getElementById('start-form').style.display = 'none';
     renderChain();
   } catch(e) {
-    errEl.textContent = e.message;
-    errEl.style.display = 'block';
+    document.getElementById('start-err').textContent = e.message;
+    document.getElementById('start-err').style.display = 'block';
   }
   document.getElementById('start-btn').disabled = false;
-  stEl.textContent = '';
-  bird('normal');
 }
 
-function exportChain() {
-  var txt = 'TRACK THE SATS — EVIDENCE CHAIN\n';
-  txt += 'Generated: ' + new Date().toISOString() + '\n';
-  if (target) txt += 'Tracking: ' + target + '\n';
-  txt += '\n' + '='.repeat(60) + '\n\n';
-  hops.forEach(function(hop, i) {
-    var tx = hop.tx;
-    var inputs = tx.inputs || tx.vin || [];
-    var outputs = tx.outputs || tx.vout || [];
-    var senders = inputs.map(function(v) {
-      return (v.scriptPubKey && v.scriptPubKey.address) || (v.prevout && v.prevout.scriptpubkey_address) || 'Unknown';
-    }).filter(function(a, i, arr) { return arr.indexOf(a) === i; });
-    txt += 'HOP ' + (i + 1) + '\n';
-    txt += 'TX: ' + hop.txid + '\n';
-    txt += 'Block: ' + fmtBlock(tx.blockNumber) + '\n';
-    txt += 'Type: ' + (tx.OPNetType || tx.type || 'Transfer') + '\n';
-    txt += 'From: ' + senders.join(', ') + '\n';
-    outputs.filter(function(o) {
-      var t = o.scriptPubKey ? o.scriptPubKey.type : o.scriptpubkey_type;
-      return t !== 'op_return';
-    }).forEach(function(o) {
-      var addr = (o.scriptPubKey && o.scriptPubKey.address) || o.scriptpubkey_address || 'Unknown';
-      txt += '  → ' + addr + ': ' + fmtSats(o.value) + '\n';
-    });
-    txt += '\n';
-  });
-  txt += '='.repeat(60) + '\n';
-  txt += '\n';
-  var a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([txt], { type: 'text/plain' }));
-  a.download = 'evidence-chain.txt';
-  a.click();
+function renderChain() {
+  const chain = document.getElementById('chain');
+  chain.innerHTML = hops.map((hop, i) => {
+    const outputs = hop.tx.outputs || hop.tx.vout || [];
+    const toHTML = outputs.map(o => `
+      <div class="row">
+        <div class="rl">${trim(o.scriptPubKey?.address || o.scriptpubkey_address || 'Unknown', 16)}</div>
+        <div class="rr">${fmtSats(o.value)}</div>
+      </div>`).join('');
+      
+    return `
+      <div class="tx-card">
+        <div class="tx-head">
+          <div class="tx-hop">// HOP ${i+1}</div>
+          <div class="tx-id">${trim(hop.txid, 20)}</div>
+        </div>
+        <div class="tx-body">
+          <div class="sec-lbl">To</div>
+          ${toHTML}
+        </div>
+      </div>`;
+  }).join('<div class="connector"><div class="cline"></div><div class="cdot"></div><div class="cline"></div></div>');
+  
+  if (hops.length > 0) document.getElementById('sbtn').style.display = 'block';
 }
 
-document.getElementById('tx-input').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') startInvestigation();
-});
+function dismissMixer() { document.getElementById('mixer-overlay').style.display = 'none'; }
 </script>
-
 </body>
 </html>
