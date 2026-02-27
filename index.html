@@ -100,7 +100,7 @@ main{position:relative;z-index:1;max-width:580px;margin:0 auto;padding:24px 16px
 <div class="grid"></div>
 <header>
   <div class="logo">
-    <img id="bird" src="Normal_redi.png" alt="Nodebird"/>
+    <img id="bird" src="Normal%20redi.png" alt="Nodebird"/>
     <div>
       <div class="logo-title">Orditrack</div>
       <div class="logo-sub">Powered by Nodebirds</div>
@@ -144,7 +144,7 @@ const ORDISCAN_KEY = '5007b461-c686-4722-bfeb-9db0ef487d54';
 let hops = [];
 let target = ''; // what the user is looking for
 
-function bird(s){ const b=document.getElementById('bird'); if(b) b.src = s==='search'?'Detective.png':'Normal_redi.png'; }
+function bird(s){ const b=document.getElementById('bird'); if(b) b.src = s==='search'?'Detective.png':'Normal%20redi.png'; }
 function trim(s,n=10){ if(!s)return'—'; if(s.length<=n*2+3)return s; return s.slice(0,n)+'…'+s.slice(-6); }
 function formatDate(unix){ if(!unix)return'—'; return new Date(unix*1000).toISOString().replace('T',' ').slice(0,16)+' UTC'; }
 function btc(sats){ return (sats/1e8).toFixed(8)+' BTC'; }
@@ -366,7 +366,7 @@ function showMixer(message, hopIdx) {
   chain.insertAdjacentHTML('beforeend', `
     <div class="chain-connector"><div class="chain-line"></div><div class="chain-dot"></div><div class="chain-line"></div></div>
     <div class="mixer-card" id="mixer-card">
-      <img id="electric-bird" src="Electric_normal.PNG" style="width:80px;height:80px;image-rendering:pixelated;display:block;margin:0 auto 12px"/>
+      <img id="electric-bird" src="Electric%20normal.png" style="width:80px;height:80px;image-rendering:pixelated;display:block;margin:0 auto 12px"/>
       <div class="mixer-title">⚡ Trail went cold</div>
       <div class="mixer-msg">${message}</div>
       <div class="mixer-sub">The trail may be untraceable from here. You can still try to add the next TX ID manually.</div>
@@ -378,8 +378,8 @@ function showMixer(message, hopIdx) {
   const eb = document.getElementById('electric-bird');
   if(eb){
     setInterval(()=>{ 
-      eb.src='Electric_expand.PNG'; 
-      setTimeout(()=>{ if(document.getElementById('electric-bird')) document.getElementById('electric-bird').src='Electric_normal.PNG'; },800);
+      eb.src='Electric%20expand.png'; 
+      setTimeout(()=>{ if(document.getElementById('electric-bird')) document.getElementById('electric-bird').src='Electric%20normal.png'; },800);
     }, 3000);
   }
 }
