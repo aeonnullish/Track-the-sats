@@ -7,22 +7,20 @@ export default {
       "Access-Control-Max-Age": "86400",
     };
 
-    // Hantera preflight-anrop (OPTIONS)
     if (request.method === "OPTIONS") {
       return new Response(null, { headers: corsHeaders });
-    }
-
-    if (request.method !== "POST") {
-      return new Response("Please send a POST request", { status: 405, headers: corsHeaders });
     }
 
     try {
       const body = await request.text();
       
-      // Vi skickar anropet till OP_NET
-      const response = await fetch("https://signet.opnet.org", {
+      // Vi använder testnet.opnet.org som är stabilare för RPC-anrop
+      const response = await fetch("https://testnet.opnet.org", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
         body: body,
       });
 
